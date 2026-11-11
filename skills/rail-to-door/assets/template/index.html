@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Maison — From the rail to your door</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,600;1,9..144,300;1,9..144,400&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+<script type="importmap">{ "imports": { "three": "./vendor/three.module.js" } }</script>
+</head>
+<body class="mode-shop">
+
+<header class="nav">
+  <a class="logo" href="./" aria-label="Maison home"><img src="assets/logo.png" alt=""><b>Maison</b></a>
+  <button class="bag-btn" id="bagBtn" aria-label="Open"><span class="cw cap">Bag</span><b id="bagCount">0</b></button>
+</header>
+
+<!-- ───────── SHOP: the rail ───────── -->
+<main class="shop" id="shop">
+  <div class="shell">
+    <div class="eyebrow">New collection <span>|</span> Shirts and jackets</div>
+    <h1>Hung like a rail. Drag any <span class="iw">piece</span> into your <span class="cw">bag</span>.</h1>
+    <div class="rail">
+      <div class="bar"></div>
+      <div class="pieces" id="pieces"></div>
+    </div>
+    <p class="copy">Hover any <span class="iw">piece</span> to turn it. Drag it into the <span class="cw">bag</span>, or click to see every angle.</p>
+  </div>
+
+  <div class="bag-zone" id="bagZone">
+    <p class="bag-tip" id="bagTip">Drop it in</p>
+    <button class="tote" id="tote" aria-label="Open">
+      <svg class="tote-handles h-tote" viewBox="0 0 220 96" aria-hidden="true"><path d="M64 94C64 22 156 22 156 94" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round"/><path d="M80 94C80 46 140 46 140 94" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round" opacity=".35"/></svg>
+      <svg class="tote-handles h-basket" viewBox="0 0 220 96" aria-hidden="true"><path d="M30 94C30 2 190 2 190 94" fill="none" stroke="#9A7B4F" stroke-width="9" stroke-linecap="round"/><path d="M30 94C30 2 190 2 190 94" fill="none" stroke="#C9A877" stroke-width="3" stroke-dasharray="6 7" stroke-linecap="round"/></svg>
+      <svg class="tote-handles h-cart" viewBox="0 0 220 60" aria-hidden="true"><path d="M4 14h30l14 44" fill="none" stroke="currentColor" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <span class="tote-peek" id="totePeek"></span>
+      <span class="tote-body"><i class="tote-fold"></i><img src="assets/logo.png" alt=""><b>Maison</b></span>
+      <span class="tote-badge" id="toteBadge">0</span>
+    </button>
+    <button class="go-btn" id="goCart" disabled>Continue to <span class="cw">bag</span> <i>→</i></button>
+  </div>
+</main>
+
+<!-- ───────── FOCUS VIEW: turn a piece front / back ───────── -->
+<div class="focus" id="focus" role="dialog" aria-modal="true">
+  <button class="close" id="close">Close ✕</button>
+  <div class="viewer" id="viewer">
+    <div class="hook"></div>
+    <div class="card" id="card"><img class="front" id="imgFront" alt=""><img class="back" id="imgBack" alt=""></div>
+    <div class="hint">Swipe or drag to turn</div>
+  </div>
+  <div class="info">
+    <div class="lab" id="fCat"></div>
+    <h2 id="fTitle"></h2>
+    <div class="price" id="fPrice"></div>
+    <div class="tabs"><button data-side="front" class="on">Front</button><button data-side="back">Back</button></div>
+    <div class="lab">Size</div>
+    <div class="sizes" id="sizes"></div>
+    <button class="add" id="fAdd">Add to <span class="cw">bag</span> <i>→</i></button>
+  </div>
+</div>
+
+<!-- ───────── BAG DRAWER ───────── -->
+<div class="scrim" id="scrim"></div>
+<aside class="drawer" id="drawer" aria-hidden="true">
+  <header><h2>Your <span class="cw">bag</span></h2><button class="x" id="drawerX" aria-label="Close">×</button></header>
+  <div class="lines" id="lines"></div>
+  <footer>
+    <p class="row"><span>Subtotal</span><b id="subTotal">$0</b></p>
+    <p class="row dim"><span>Shipping</span><span id="shipCost">—</span></p>
+    <button class="or-btn wide" id="toPay">Continue to payment →</button>
+  </footer>
+</aside>
+
+<!-- ───────── PAYMENT ───────── -->
+<section class="pay" id="pay" aria-hidden="true">
+  <div class="pay-card">
+    <button class="x" id="payX" aria-label="Back">←</button>
+    <div class="pay-left">
+      <p class="mono eyebrow">CHECKOUT</p>
+      <h2>Almost <em>yours.</em></h2>
+      <div class="sum" id="sum"></div>
+      <p class="row"><span>Subtotal</span><b id="pSub"></b></p>
+      <p class="row dim"><span>Shipping · Air express</span><span id="pShip"></span></p>
+      <p class="row total"><span>Total</span><b id="pTotal"></b></p>
+    </div>
+    <form class="pay-right" id="payForm">
+      <p class="mono eyebrow">DELIVER TO</p>
+      <label><span>Full name</span><input name="name" value="Ama Mensah" required></label>
+      <label><span>Street address</span><input name="street" value="14 Kingsland Road, Flat 3" required></label>
+      <label><span>City</span><select name="city" id="citySel"></select></label>
+      <p class="mono eyebrow" style="margin-top:22px">PAYMENT</p>
+      <div class="democard">
+        <i></i>
+        <div><b>Demo card ···· 4242</b><span>This is a prototype — nothing is charged and no card details are collected.</span></div>
+      </div>
+      <button class="or-btn wide pay-btn" id="payBtn" type="submit"><span class="t">Pay <b id="payAmt"></b></span><i class="spin"></i><span class="ok">Paid ✓</span></button>
+    </form>
+  </div>
+</section>
+
+<!-- ───────── THE ORDER JOURNEY ───────── -->
+<section class="journey" id="journey">
+  <div class="stage">
+    <div class="j-under">
+      <div class="j-copy pos-tl" data-in=".025" data-out=".13"><p class="mono eyebrow">01 — PACKED BY HAND</p><h2>Folded, wrapped,<br><em>sealed.</em></h2><p class="body">Every piece is checked, folded in tissue and boxed in Lisbon — the moment your payment lands.</p></div>
+      <div class="j-copy pos-tl" data-in=".15" data-out=".215"><p class="mono eyebrow">02 — LABELED</p><h2>Your name,<br><em>one number.</em></h2><p class="body">Order <b class="oNo"></b> follows the box through every hand, van and flight.</p></div>
+      <div class="j-copy pos-bl" data-in=".245" data-out=".325"><p class="mono eyebrow">03 — SCANNED OUT</p><h2>Out of the atelier,<br><em>by name.</em></h2></div>
+      <div class="j-copy pos-tl" data-in=".365" data-out=".535"><p class="mono eyebrow">04 — ON THE ROAD</p><h2>Loaded, locked,<br><em>rolling.</em></h2><p class="body">Our van leaves for Humberto Delgado the same evening.</p></div>
+      <div class="j-copy pos-tl" data-in=".575" data-out=".765"><p class="mono eyebrow">05 — AT THE AIRPORT</p><h2>Up the belt,<br><em>into the hold.</em></h2><p class="body">Cleared, weighed and loaded on tonight's cargo flight.</p></div>
+      <div class="j-copy pos-tl" data-in=".80" data-out=".905"><p class="mono eyebrow">06 — IN THE AIR</p><h2><span class="oFrom">Lisbon</span> to <span class="oTo"></span>,<br><em class="up blue">overnight.</em></h2></div>
+    </div>
+    <canvas id="gl" aria-hidden="true"></canvas>
+    <div class="cut" id="cut"></div>
+    <div class="j-over">
+      <div class="scan-card" id="scanCard"><p class="mono row"><span>SCAN OK</span><span class="ok">● LISBON ATELIER</span></p><p class="mono big oNo"></p><p class="mono row"><span id="scItems"></span><span class="oRoute"></span></p></div>
+      <div class="flight-card" id="flightCard"><p class="mono dim">FLIGHT MS 207 · CARGO</p><p class="fl-route"><b class="oA">LIS</b><span></span><b class="oB"></b></p><p class="fl-mi"><b id="flMi">0</b><i class="mono">KM</i><span class="mono dim">CRUISING 11,000 M</span></p></div>
+      <div class="j-copy pos-tl over" data-in=".955" data-out="1.2"><p class="mono eyebrow">07 — DELIVERED</p><h2>At your door,<br><em>as promised.</em></h2><p class="body">Handed over in <span class="oTo"></span> and photographed on the step. Enjoy it, <span class="oName"></span>.</p><p class="end-actions"><button class="or-btn" id="again">Shop again</button><button class="ghost-btn" id="replay">Replay the journey</button></p></div>
+      <div class="toast" id="toast"><img class="tm" src="assets/logo.png" alt=""><div><b>Maison</b><span>Order <span class="oNo"></span> delivered — left at the door for <span class="oName"></span>.</span></div></div>
+    </div>
+    <div class="hud">
+      <ol class="steps" id="steps"><li>Packed</li><li>Scanned</li><li>On the road</li><li>Airport</li><li>In the air</li><li>Delivered</li></ol>
+      <div class="hud-right"><span class="mono">ORDER <b class="oNo"></b></span><button class="play" id="playBtn" aria-label="Play or pause">❚❚</button></div>
+      <i class="bar-p"><b id="hudBar"></b></i>
+    </div>
+  </div>
+</section>
+
+<div class="curtain" id="curtain"><p class="mono">PAYMENT RECEIVED — PACKING YOUR ORDER</p></div>
+<script type="module" src="js/main.js"></script>
+</body>
+</html>

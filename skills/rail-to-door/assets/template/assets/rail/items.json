@@ -1,0 +1,110 @@
+[
+ {
+  "id": "linen-camp-shirt-navy",
+  "name": "Linen Camp Shirt · Navy",
+  "price": 64,
+  "cat": "Shirts",
+  "sizes": [
+   "S",
+   "M",
+   "L",
+   "XL"
+  ],
+  "front": "assets/rail/linen-camp-shirt-navy-front.webp",
+  "back": "assets/rail/linen-camp-shirt-navy-back.webp",
+  "side": "assets/rail/linen-camp-shirt-navy-side.webp",
+  "color": "#292d3e",
+  "w": 765,
+  "h": 1000
+ },
+ {
+  "id": "linen-camp-shirt-bone",
+  "name": "Linen Camp Shirt · Bone",
+  "price": 64,
+  "cat": "Shirts",
+  "sizes": [
+   "S",
+   "M",
+   "L",
+   "XL"
+  ],
+  "front": "assets/rail/linen-camp-shirt-bone-front.webp",
+  "back": "assets/rail/linen-camp-shirt-bone-back.webp",
+  "side": "assets/rail/linen-camp-shirt-bone-side.webp",
+  "color": "#bbbeb8",
+  "w": 765,
+  "h": 1000
+ },
+ {
+  "id": "linen-camp-shirt-sage",
+  "name": "Linen Camp Shirt · Sage",
+  "price": 64,
+  "cat": "Shirts",
+  "sizes": [
+   "S",
+   "M",
+   "L",
+   "XL"
+  ],
+  "front": "assets/rail/linen-camp-shirt-sage-front.webp",
+  "back": "assets/rail/linen-camp-shirt-sage-back.webp",
+  "side": "assets/rail/linen-camp-shirt-sage-side.webp",
+  "color": "#899576",
+  "w": 765,
+  "h": 1000
+ },
+ {
+  "id": "linen-camp-shirt-charcoal",
+  "name": "Linen Camp Shirt · Charcoal",
+  "price": 64,
+  "cat": "Shirts",
+  "sizes": [
+   "S",
+   "M",
+   "L",
+   "XL"
+  ],
+  "front": "assets/rail/linen-camp-shirt-charcoal-front.webp",
+  "back": "assets/rail/linen-camp-shirt-charcoal-back.webp",
+  "side": "assets/rail/linen-camp-shirt-charcoal-side.webp",
+  "color": "#343533",
+  "w": 765,
+  "h": 1000
+ },
+ {
+  "id": "linen-camp-shirt-clay",
+  "name": "Linen Camp Shirt · Clay",
+  "price": 64,
+  "cat": "Shirts",
+  "sizes": [
+   "S",
+   "M",
+   "L",
+   "XL"
+  ],
+  "front": "assets/rail/linen-camp-shirt-clay-front.webp",
+  "back": "assets/rail/linen-camp-shirt-clay-back.webp",
+  "side": "assets/rail/linen-camp-shirt-clay-side.webp",
+  "color": "#896b5e",
+  "w": 765,
+  "h": 1000
+ },
+ {
+  "id": "linen-camp-shirt-sky",
+  "name": "Linen Camp Shirt · Sky",
+  "price": 64,
+  "cat": "Shirts",
+  "sizes": [
+   "S",
+   "M",
+   "L",
+   "XL"
+  ],
+  "front": "assets/rail/linen-camp-shirt-sky-front.webp",
+  "back": "assets/rail/linen-camp-shirt-sky-back.webp",
+  "side": "assets/rail/linen-camp-shirt-sky-side.webp",
+  "color": "#8797a6",
+  "w": 765,
+  "h": 1000
+ }
+]
