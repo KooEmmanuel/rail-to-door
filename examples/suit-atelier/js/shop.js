@@ -1,5 +1,6 @@
 import { PRODUCTS, CITIES, ORIGIN, CONFIG, CATEGORIES, CURRENCY, FABRICS, MTM, COLOURS, MEASURES } from './data.js';
 import { recolour } from './recolour.js';
+import { initTryOn } from './tryon.js';
 import { fabricOf, mtmPrice, swatchURL } from './fabrics.js';
 
 const $ = id => document.getElementById(id);
@@ -220,6 +221,13 @@ export function initShop({ onPaid }){
   viewer.addEventListener('pointermove', e => { if (!vd) return; angle = base + (e.clientX - sx) * .6; card.style.transform = `rotateY(${angle}deg)`; });
   const settle = () => { if (!vd) return; vd = false; viewer.classList.remove('dragging'); setAngle(Math.round(angle / 180) * 180); };
   viewer.addEventListener('pointerup', settle); viewer.addEventListener('pointercancel', settle);
+  // try it on: the suit as shown (its colour or cloth) on the customer's own photo
+  const tryOn = initTryOn();
+  $('fTry').addEventListener('click', () => {
+    const f = fabricOf(fab), c = colourOf(cur, col);
+    tryOn.open({ product: cur, picture: imgF.src, whole: isVest(cur), key: `${cur.id}|${mode === 'mtm' ? 'f:' + fab : 'c:' + col}`,
+      label: mode === 'mtm' ? `${f.name} · made to measure` : `${c.name} · ready to wear` }, $('fTry'));
+  });
   $('fAdd').addEventListener('click', () => {
     if (mode === 'mtm'){ const bad = [...mBox.querySelectorAll('label:not([hidden]) input')].find(i => !i.checkValidity()); if (bad){ bad.reportValidity(); bad.focus(); return; } store.set('nm-measure', JSON.stringify(readMeasure())); }
     const r0 = card.getBoundingClientRect(), p = cur, line = mode === 'mtm' ? { id: p.id, size: null, fab, measure: readMeasure() } : { id: p.id, size, col };

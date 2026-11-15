@@ -1,4 +1,4 @@
-# Extensions: two ways to buy, colour and cloth repaint, order tracking, the workshop, currencies, collections
+# Extensions: two ways to buy, colour and cloth repaint, try it on, order tracking, the workshop, currencies, collections
 
 The template sells one way: pick a size, pay, watch the film. Real stores often need more. These extensions came out of a real build (a suit atelier), and they work together or one at a time. The modules are in `assets/extensions/`. A complete working site that uses all of them is in the repository's `examples/suit-atelier/`; read it when this guide is not enough.
 
@@ -12,6 +12,7 @@ Add an extension only when the brief calls for it. Each one says what it needs f
 | 4. Colour and cloth repaint | the customer chooses a colour or a material and should *see* it | `recolour.js`, `scripts/make_masks.py` |
 | 5. Order tracking + admin | the customer should follow a real order after paying | `orders.js`, `admin.html`, `admin.js`, `main.js`, `journey.js` |
 | 6. The workshop film | made-to-order goods: show the making before the packing | `workshop.js`, `journey.js` |
+| 7. Try it on | clothing: the customer should see the garment on their own photo | `tryon.js`, `recolour.js`, viewer markup |
 
 Copy a module with `cp ~/.claude/skills/rail-to-door/assets/extensions/js/<name>.js <site>/js/`. Then wire it in as below.
 
@@ -117,6 +118,42 @@ The cloth, the jacket and the pattern paper take the chosen cloth's colour and w
 - Workshop captions carry `data-q` (they are timed on `q`, not `p`), with a short fade window so they stay readable on the frames where tracking rests.
 - The garment is a suit jacket. For other made-to-order goods (shoes, bags, furniture), keep the five-bench structure and the timing, and rebuild the benches for that craft to the same standard: real tools, real parts, nothing toy-like.
 
+## 7. Try it on (virtual try-on)
+
+The customer takes or uploads a photo and gets back a picture of themselves wearing the garment, in the colour or cloth they chose. `tryon.js` holds the whole feature; the panel's markup is the `#tryon` section of the example's `index.html`, and its styles are the "Try it on" block at the end of the example's `css/style.css`. Copy all three.
+
+```js
+import { initTryOn } from './tryon.js';
+const tryOn = initTryOn();
+tryOn.open({ product, picture: imgFront.src, whole: false, key: `${product.id}|c:${colour}`, label: 'Navy · ready to wear' }, openerButton);
+```
+
+- **The panel** is a fitting-room mirror beside the steps:
+  - Take a photo (camera, mirrored, with a 3-second timer so the customer can step back) or upload one.
+  - A **consent checkbox** that must be ticked before anything is sent.
+  - A waiting state with the service's own progress (sending, queue position, working) and a seconds counter.
+  - The result, with a "You / In the jacket" compare switch, Save picture, and Another photo.
+  - Shape the mirror to the brand; the example uses an arch.
+- **What is sent:** the photo fitted to 768×1024, and a garment picture built in the browser by `garmentBlob()`. That picture is the photo *as shown* (so a chosen colour or cloth carries through), with the hanger painted out using the extension-4 mask, cropped to the top garment where the photo also shows trousers (`whole: true` skips the crop, for waistcoats), on white.
+- **Privacy:**
+  - The photo lives in the page's memory for the visit and is never written to storage.
+  - The consent line names the service the photo goes to.
+  - Results are cached per photo and garment, so looking again costs nothing.
+  - Closing the panel stops the camera and aborts a running request.
+- **The service** is the one function `tryOnRequest()`, set up by `TRYON` in `data.js`:
+  - *Prototype:* `TRYON.space` is a free public Hugging Face Space of the Leffa model (MIT licence), called straight from the browser over Gradio's queue API. It allows **about two try-ons per visitor per day** (the anonymous GPU quota) and takes 20–60 seconds. The quota error is caught and shown as "works again tomorrow". Use it to show the idea, not for a live store.
+  - *Live:* set `TRYON.endpoint` to a route on the store's own server. It receives `person` and `garment` (multipart) and returns `{ "url": "…" }`. The server calls a paid try-on service with its secret key. **Never put a key or token in `data.js`**: everything there is public. Do not create accounts or keys for the user; tell them what is needed.
+- **Limits to report:**
+  - It is an AI preview of colour and style, not a fit check.
+  - Only the top garment is put on; trousers are unchanged.
+  - The garment covers roughly where the person's own top is, so a plain long-sleeved top gives the best picture.
+  - The camera needs https on a live site.
+- **Testing:**
+  - The free quota is small, so test the flow with the service stubbed: intercept the Space's `/config`, `/upload`, `/queue/join`, `/queue/data` and `/file=` calls and answer with a saved result.
+  - Spend at most one real call to confirm the live path.
+  - Launch headless Chrome with `--use-fake-ui-for-media-stream --use-fake-device-for-media-stream` to test the camera.
+  - Never publish a test photo of a real person.
+
 ---
 
 ## Checks for any extension
@@ -128,5 +165,6 @@ The cloth, the jacket and the pattern paper take the chosen cloth's colour and w
   - Bad measurements are refused.
   - The film starts at packing for ready to wear and at the workshop for made to measure.
   - A tracking link stops at the right stage, and the admin moves it on live in another tab.
+  - Try it on: camera and upload, consent required, the waiting state, the result and compare, the quota message, Escape closes only the panel.
   - No console errors, and no sideways scroll on the phone.
-- Report placeholders: stock colours, cloths and their prices, the making fee, lead times, exchange rates, and the fact that orders live in the browser until a server is connected.
+- Report placeholders: stock colours, cloths and their prices, the making fee, lead times, exchange rates, the fact that orders live in the browser until a server is connected, and that try-on runs on a free demo service with a small daily limit.

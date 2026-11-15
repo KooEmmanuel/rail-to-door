@@ -5,6 +5,7 @@ A complete rail-to-door store using every extension in `skills/rail-to-door/refe
 - **Ready to wear:** type → colour → size. Packed and shipped in days.
 - **Made to measure:** type → cloth → body measurements. Cut and sewn in weeks.
 - **The picture repaints** in the chosen colour or cloth (`js/recolour.js`, with masks in `assets/rail/mask/`).
+- **Try it on** (`js/tryon.js`): take or upload a photo and see the jacket on you. It uses a free Hugging Face demo of the Leffa model, limited to about two try-ons a day per person; your photo is sent there and is not stored by this site. Set `TRYON.endpoint` in `js/data.js` for a live store.
 - **Order tracking** at `?track=<order number>`, with a staff page at `admin.html`. Move an order there and the tracking film carries on in the other tab.
 - **The workshop film** for made-to-measure orders, collections, and prices in several currencies.
 

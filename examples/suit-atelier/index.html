@@ -125,9 +125,72 @@
         <p class="measure-note">Measure over a shirt, tape snug, not tight. Our cutter checks every number with you before the cloth is cut.</p></li>
     </ol>
     <button class="add" id="fAdd"><span>Add to <span class="cw">bag</span></span> <i>→</i></button>
+    <button class="try-btn" id="fTry" type="button"><i aria-hidden="true"></i><span>Try it on<small>See this jacket on your own photo</small></span><b aria-hidden="true">→</b></button>
     <p class="v-note" id="vNote"></p>
   </div>
 </div>
+
+<!-- ───────── TRY IT ON: your photo + the chosen suit ───────── -->
+<section class="tryon" id="tryon" role="dialog" aria-modal="true" aria-labelledby="tryTitle" aria-hidden="true" data-state="start" data-view="before">
+  <div class="try-card">
+    <button class="x" id="tryX" aria-label="Close try-on">×</button>
+    <div class="try-stage">
+      <div class="try-mirror">
+        <div class="try-empty" aria-hidden="true">
+          <svg viewBox="0 0 120 160" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-dasharray="3 4"><circle cx="60" cy="38" r="17"/><path d="M14 160V112c0-20 14-34 34-36l12 12 12-12c20 2 34 16 34 36v48"/></svg>
+          <p>Your photo goes here</p>
+        </div>
+        <video id="tryVideo" playsinline muted aria-label="Camera preview"></video>
+        <img id="tryPhoto" alt="Your photo">
+        <img id="tryResult" alt="Your photo, wearing the jacket">
+        <div class="try-busy" aria-hidden="true"><i class="try-sweep"></i></div>
+        <b class="try-count" id="tryCount" aria-live="assertive"></b>
+        <div class="try-cam">
+          <button type="button" class="try-camx" id="tryCamX">Cancel</button>
+          <button type="button" class="try-shutter" id="tryShutter" aria-label="Take the photo in 3 seconds"><i></i></button>
+          <span>3 second timer</span>
+        </div>
+      </div>
+      <div class="tabs try-tabs" role="group" aria-label="Compare">
+        <button type="button" data-v="before" aria-pressed="false">You</button><button type="button" data-v="after" class="on" aria-pressed="true">In the jacket</button>
+      </div>
+    </div>
+    <div class="try-side">
+      <p class="mono eyebrow">TRY IT ON</p>
+      <h2 id="tryTitle">See it <em>on you.</em></h2>
+      <div class="try-piece"><i><img id="tryGarment" alt=""></i><span><b id="tryName"></b><small id="tryWhat"></small></span></div>
+
+      <div class="try-step try-pick">
+        <ul class="try-tips"><li>Face the camera, arms relaxed</li><li>Waist up or full length</li><li>Good light, plain background</li></ul>
+        <div class="try-acts">
+          <button type="button" class="or-btn" id="tryCam">Take a photo</button>
+          <button type="button" class="or-btn try-ghost" id="tryUp">Upload a photo</button>
+          <input type="file" id="tryFile" accept="image/*" hidden>
+        </div>
+        <label class="try-consent"><input type="checkbox" id="tryOk"><span>I agree that my photo is sent to an AI service on Hugging Face to make this picture. This site does not store it.</span></label>
+        <button type="button" class="or-btn wide" id="tryGo" disabled>Try it on →</button>
+      </div>
+
+      <div class="try-step try-wait" role="status" aria-live="polite">
+        <div class="try-stitch" aria-hidden="true"></div>
+        <p class="try-status"><b id="tryStatus"></b><span id="tryTime"></span></p>
+        <p class="try-small">This usually takes under a minute. Keep this window open.</p>
+      </div>
+
+      <div class="try-step try-done">
+        <p class="try-donenote" id="tryDoneNote" tabindex="-1">Here it is on you. Switch between <b>You</b> and <b>In the jacket</b> to compare.</p>
+        <div class="try-acts">
+          <a class="or-btn" id="trySave" download="try-on.jpg">Save picture</a>
+          <button type="button" class="or-btn try-ghost" id="tryAgain">Another photo</button>
+        </div>
+        <button type="button" class="or-btn wide" id="tryBack">Back to the suit →</button>
+      </div>
+
+      <p class="try-err" id="tryErr" role="alert"></p>
+      <p class="try-small try-fine">An AI preview of the jacket on your photo. It shows colour and style well; it is not an exact fit, and trousers are not changed.</p>
+    </div>
+  </div>
+</section>
 
 <!-- ───────── BAG DRAWER ───────── -->
 <div class="scrim" id="scrim"></div>

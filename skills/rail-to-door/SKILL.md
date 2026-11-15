@@ -18,7 +18,7 @@ Everything needed is inside the skill folder. You do **not** need, and must not 
 - `assets/template/` — the complete working site (plain HTML/CSS/ES modules + three.js, no build step) carrying a neutral placeholder brand ("Maison") and six sample shirts. It is the starting point for every run.
 - `scripts/` — create a site, apply a brand, make a stand-in logo, process product images, health-check.
 - `references/` — one guide per stage.
-- `assets/extensions/` — optional modules (colour / cloth repaint, cloths, orders and tracking, staff admin, the workshop film), wired in by `references/extensions.md`.
+- `assets/extensions/` — optional modules (colour / cloth repaint, try it on, cloths, orders and tracking, staff admin, the workshop film), wired in by `references/extensions.md`.
 
 **Always start a new site from the template and change it; never rewrite it from scratch.** The template embodies a lot of hard-won visual decisions (lighting, proportions, detail), and rebuilding loses them. The placeholder brand must never reach the user: every run replaces it with their brand, or with one you design.
 
@@ -35,7 +35,7 @@ The first word of the arguments picks a stage. With no stage word, run the full 
 | `/rail-to-door-checkout` · `… checkout …` | Drawer, totals, payment screen | `references/checkout.md` |
 | `/rail-to-door-journey` · `… journey …` | The 3D journey: packaging, conveyor, truck, plane, map, house | `references/journey.md` |
 | `/rail-to-door-verify` · `… verify …` | Serve it, run the whole flow in a browser, look at every scene | `references/verify.md` |
-| `/rail-to-door-extras` · `… extras …` | Optional: collections, currencies, ready to wear + made to measure, colour / cloth repaint, order tracking + admin, the workshop film | `references/extensions.md` |
+| `/rail-to-door-extras` · `… extras …` | Optional: collections, currencies, ready to wear + made to measure, colour / cloth repaint, try it on, order tracking + admin, the workshop film | `references/extensions.md` |
 
 **Which site a stage works on:** the folder the user names; otherwise the current directory if it is a rail-to-door site (it has `brand.json` next to `index.html`); otherwise a new one created from the template at `./<brand-slug>-store`. Do not search the machine for one.
 
@@ -61,6 +61,7 @@ Before building, settle the brief. Read it out of the prompt; where the prompt i
 | Captions and copy | generic | `index.html` |
 | Ways to buy | ready to wear only | add made to measure (cloth + measurements) with the extras stage |
 | Colour / material choice | one photo per product | colour and cloth repaint with the extras stage |
+| Seeing it on yourself | — | virtual try-on from the customer's photo with the extras stage |
 | After payment | the film | order tracking + staff admin + workshop film with the extras stage |
 | Currency, collections | one currency, one rail | multi-currency and a category filter with the extras stage |
 

@@ -7,7 +7,7 @@ import { drawCloth } from './fabrics.js';
 //   ready to wear:   recolour(src, { hex })            keeps the photo's own weave (pinstripe stays pinstripe)
 //   made to measure: recolour(src, { hex, fabric })    smooths the photo's weave away and lays the new cloth in
 
-const maskOf = src => src.replace('assets/rail/', 'assets/rail/mask/').replace(/\.webp$/, '.png');
+export const maskOf = src => src.replace('assets/rail/', 'assets/rail/mask/').replace(/\.webp$/, '.png');
 const loadImg = src => new Promise((ok, no) => { const i = new Image(); i.decoding = 'async'; i.onload = () => ok(i); i.onerror = no; i.src = src; });
 const srcCache = new Map(), outCache = new Map();
 

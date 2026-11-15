@@ -264,6 +264,13 @@ export const MEASURES = [
   { key: 'inseam', label: 'Inside leg', min: 60, max: 100, def: 81 }
 ];
 
+// Try it on: the customer's photo and the chosen suit go to an AI try-on model, which returns a picture of them wearing it.
+// PROTOTYPE: a free public demo of the Leffa model on Hugging Face. It allows about two try-ons per person per day
+// and can be slow or busy, so it is for showing the idea, not for a live store.
+// GOING LIVE: set `endpoint` to a route on your own server (POST person + garment images, returns { url }). The server
+// calls a paid try-on service with its secret key. Never put a key in this file: everything here is public.
+export const TRYON = { space: 'https://franciszzj-leffa.hf.space', endpoint: '', steps: 30 };
+
 // What the shopper fills, and what one product is called in the page copy.
 // container.kind: 'tote' | 'basket' | 'cart' | 'box'   (drawn in css/style.css)
 export const CONFIG = { container: { kind: "tote", word: "bag" }, itemWord: "suit" };
