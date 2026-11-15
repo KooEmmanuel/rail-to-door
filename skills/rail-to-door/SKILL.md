@@ -18,6 +18,7 @@ Everything needed is inside the skill folder. You do **not** need, and must not 
 - `assets/template/` — the complete working site (plain HTML/CSS/ES modules + three.js, no build step) carrying a neutral placeholder brand ("Maison") and six sample shirts. It is the starting point for every run.
 - `scripts/` — create a site, apply a brand, make a stand-in logo, process product images, health-check.
 - `references/` — one guide per stage.
+- `assets/extensions/` — optional modules (colour / cloth repaint, cloths, orders and tracking, staff admin, the workshop film), wired in by `references/extensions.md`.
 
 **Always start a new site from the template and change it; never rewrite it from scratch.** The template embodies a lot of hard-won visual decisions (lighting, proportions, detail), and rebuilding loses them. The placeholder brand must never reach the user: every run replaces it with their brand, or with one you design.
 
@@ -34,6 +35,7 @@ The first word of the arguments picks a stage. With no stage word, run the full 
 | `/rail-to-door-checkout` · `… checkout …` | Drawer, totals, payment screen | `references/checkout.md` |
 | `/rail-to-door-journey` · `… journey …` | The 3D journey: packaging, conveyor, truck, plane, map, house | `references/journey.md` |
 | `/rail-to-door-verify` · `… verify …` | Serve it, run the whole flow in a browser, look at every scene | `references/verify.md` |
+| `/rail-to-door-extras` · `… extras …` | Optional: collections, currencies, ready to wear + made to measure, colour / cloth repaint, order tracking + admin, the workshop film | `references/extensions.md` |
 
 **Which site a stage works on:** the folder the user names; otherwise the current directory if it is a rail-to-door site (it has `brand.json` next to `index.html`); otherwise a new one created from the template at `./<brand-slug>-store`. Do not search the machine for one.
 
@@ -57,6 +59,10 @@ Before building, settle the brief. Read it out of the prompt; where the prompt i
 | Destination | brick house, panelled door | `doorColor`; other buildings in `journey.md` |
 | Origin city / airport, destination cities | Lisbon (placeholder) | `brand.json`, `CITIES` in `js/data.js` |
 | Captions and copy | generic | `index.html` |
+| Ways to buy | ready to wear only | add made to measure (cloth + measurements) with the extras stage |
+| Colour / material choice | one photo per product | colour and cloth repaint with the extras stage |
+| After payment | the film | order tracking + staff admin + workshop film with the extras stage |
+| Currency, collections | one currency, one rail | multi-currency and a category filter with the extras stage |
 
 The built-in pieces are a strong default, not a limit. If the brief calls for something that is not built in (a scooter courier, a ship, a market stall instead of a rail, a gift box as the cart), build it in the same style and to the same standard — the stage guides say how.
 
@@ -82,6 +88,7 @@ Everything else: decide, build, report.
 3. **Display** — `references/rail.md`: copy, sizing, the container.
 4. **Checkout** — `references/checkout.md`.
 5. **Journey** — `references/journey.md`: confirm every scene carries the brand; make the changes the brief calls for.
+5b. **Extras, if the brief needs them** — `references/extensions.md`: two ways to buy, colour / cloth repaint, tracking and admin, the workshop, currencies, collections.
 6. **Verify** — `python3 scripts/check_site.py <site>`, then the browser run in `references/verify.md`. Do not skip it: most defects in this kind of build are only visible in a screenshot.
 7. **Report** — where the site is and how to open it; the brief as built (including what you decided); what is placeholder (names, prices, a stand-in logo, the demo payment); credits spent; what you did not check.
 
@@ -124,5 +131,6 @@ serve.py            tiny static server:  python3 serve.py 8792
 | `scripts/make_logo.py "<Name>" <out.png>` | Monogram stand-in when there is no logo |
 | `scripts/process_cutouts.py --raw <dir> --site <site> [--synth-side] [--append]` | Cut out, trim, resize product images; rewrite the catalogue |
 | `scripts/check_site.py <site>` | Static health check before the browser run |
+| `scripts/make_masks.py <site> [preview.png]` | Cloth masks for the colour / cloth repaint (leaves the hanger out) |
 
 `process_cutouts.py` and `make_logo.py` need Pillow; the former also numpy, opencv-python and scipy (`pip install pillow numpy opencv-python scipy`).

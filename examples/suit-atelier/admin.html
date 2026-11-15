@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Atelier Example — Orders</title>
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#0E1A2B">
+<link rel="icon" href="assets/logo.png" type="image/png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..700;1,6..96,400..700&family=Hanken+Grotesk:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{--mid:#0E1A2B;--bone:#F4F0E8;--copper:#985322;--wash:#EAE4D8;--slate:#2E3A4B;--muted:#646C78;--line:#D9D2C4;
+  --serif:"Bodoni Moda",Didot,Georgia,serif;--sans:"Hanken Grotesk",system-ui,sans-serif;--mono:"JetBrains Mono",ui-monospace,monospace}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bone);color:var(--mid);font:15px/1.5 var(--sans);-webkit-font-smoothing:antialiased}
+button,select{font:inherit;color:inherit;cursor:pointer}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--copper);outline-offset:2px}
+.bar{background:var(--mid);color:var(--bone);padding:14px 24px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.bar a.home{display:flex;align-items:center;gap:10px;text-decoration:none;font:500 18px var(--serif)}
+.bar a.home i{width:26px;height:26px;background:var(--bone);-webkit-mask:url(assets/logo.png) center/contain no-repeat;mask:url(assets/logo.png) center/contain no-repeat}
+.bar a.home em{font-style:italic;font-weight:400;color:#D7A57E}
+.bar .demo{font:500 10.5px var(--mono);letter-spacing:.14em;text-transform:uppercase;border:1px solid rgba(244,240,232,.35);border-radius:99px;padding:5px 10px;color:#C9CED6}
+main{max-width:1180px;margin:0 auto;padding:36px 24px 80px}
+h1{font:400 clamp(34px,4vw,48px)/1.05 var(--serif);letter-spacing:-.015em}
+h1 em{font-style:italic;color:var(--copper)}
+.lead{color:var(--slate);max-width:62ch;margin:10px 0 26px}
+.tools{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:22px}
+.btn{border:1px solid var(--mid);border-radius:99px;padding:9px 16px;font-size:13px;background:transparent;transition:background .2s,color .2s}
+.btn:hover{background:var(--mid);color:var(--bone)}
+.btn.solid{background:var(--mid);color:var(--bone)}
+.btn.solid:hover{background:var(--copper);border-color:var(--copper)}
+.btn.sm{padding:6px 12px;font-size:12px}
+.empty{border:1px dashed var(--line);border-radius:12px;padding:40px 24px;text-align:center;color:var(--muted)}
+.order{border:1px solid var(--line);border-radius:12px;padding:18px 20px;margin-bottom:14px;background:#FBF9F4}
+.order-head{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;align-items:baseline}
+.order-head b{font:600 14px var(--mono);letter-spacing:.06em}
+.order-head h2{font:400 22px var(--serif);margin-top:2px}
+.order-head .meta{font-size:13px;color:var(--muted);text-align:right}
+.track{display:flex;gap:3px;margin:16px 0 10px}
+.track button{flex:1;min-width:0;border:0;background:transparent;padding:0;text-align:left}
+.track button i{display:block;height:6px;border-radius:3px;background:var(--line);transition:background .25s}
+.track button span{display:block;font-size:10.5px;color:var(--muted);margin-top:6px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.track button.done i{background:var(--mid)}
+.track button.now i{background:var(--copper)}
+.track button.now span{color:var(--mid);font-weight:600}
+.track button:hover span{color:var(--mid)}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center;justify-content:space-between}
+.row .now-text{font-size:13.5px;color:var(--slate)}
+.row .now-text b{font-family:var(--serif);font-weight:500;font-size:16px;color:var(--mid);margin-right:6px}
+.acts{display:flex;gap:8px;flex-wrap:wrap}
+.kind{display:inline-block;margin-left:8px;font:500 10px var(--mono);letter-spacing:.1em;text-transform:uppercase;padding:3px 8px;border-radius:99px;border:1px solid var(--line);color:var(--muted);vertical-align:2px}
+.kind.mtm{border-color:var(--copper);color:var(--copper)}
+.meas{font-size:12.5px;color:var(--slate);margin-top:2px}
+.meta .sw{display:inline-block;width:14px;height:14px;border-radius:50%;background-size:cover;vertical-align:-2px;margin-right:6px;box-shadow:inset 0 0 0 1px rgba(0,0,0,.15)}
+.note{margin-top:28px;font-size:12.5px;color:var(--muted);max-width:70ch;line-height:1.6}
+.toast{position:fixed;left:50%;bottom:24px;transform:translate(-50%,20px);background:var(--mid);color:var(--bone);padding:10px 16px;border-radius:99px;font-size:13px;opacity:0;transition:all .3s;pointer-events:none}
+.toast.on{opacity:1;transform:translate(-50%,0)}
+@media (max-width:700px){
+  .track span{display:none!important}
+  .order-head .meta{text-align:left}
+}
+</style>
+</head>
+<body>
+<header class="bar"><a class="home" href="./"><i></i>Atelier <em>Example</em></a><span class="demo">Demo admin · prototype</span></header>
+<main>
+  <h1>Orders in <em>the atelier.</em></h1>
+  <p class="lead">Move an order forward and the customer's tracking film carries on to the new stage. Open the tracking link in another tab and press a stage here to watch it happen.</p>
+  <div class="tools"><button class="btn solid" id="demo" type="button">Create a demo order</button><span class="lead" style="margin:0;align-self:center;font-size:13px">Half the demo orders are made to measure, half ready to wear.</span><a class="btn" href="./">Open the store</a></div>
+  <div id="list" aria-live="polite"></div>
+  <p class="note"><b>Prototype.</b> Orders are stored in this browser, so this page only sees orders placed on this device. Live, this page sits behind a staff login and reads the store's server, and the later stages (dispatch, airport, in the air, delivered) update by themselves from the courier's tracking feed.</p>
+</main>
+<div class="toast" id="toast"></div>
+<script type="module" src="js/admin.js"></script>
+</body>
+</html>

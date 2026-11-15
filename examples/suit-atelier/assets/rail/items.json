@@ -1,0 +1,162 @@
+[
+ {
+  "id": "the-navy-two-button",
+  "name": "The Navy Two-Button",
+  "price": 480,
+  "cat": "Single-breasted \u00b7 Notch lapel",
+  "sizes": [
+   "36R",
+   "38R",
+   "40R",
+   "42R",
+   "44R",
+   "46R"
+  ],
+  "front": "assets/rail/the-navy-two-button-front.webp",
+  "back": "assets/rail/the-navy-two-button-back.webp",
+  "side": "assets/rail/the-navy-two-button-side.webp",
+  "color": "#1f222f",
+  "w": 583,
+  "h": 1000
+ },
+ {
+  "id": "the-cream-linen",
+  "name": "The Cream Linen",
+  "price": 420,
+  "cat": "Single-breasted \u00b7 Linen",
+  "sizes": [
+   "36R",
+   "38R",
+   "40R",
+   "42R",
+   "44R",
+   "46R"
+  ],
+  "front": "assets/rail/the-cream-linen-front.webp",
+  "back": "assets/rail/the-cream-linen-back.webp",
+  "side": "assets/rail/the-cream-linen-side.webp",
+  "color": "#dbd1c1",
+  "w": 595,
+  "h": 1000
+ },
+ {
+  "id": "the-charcoal-pinstripe",
+  "name": "The Charcoal Pinstripe",
+  "price": 540,
+  "cat": "Single-breasted \u00b7 Peak lapel",
+  "sizes": [
+   "36R",
+   "38R",
+   "40R",
+   "42R",
+   "44R",
+   "46R"
+  ],
+  "front": "assets/rail/the-charcoal-pinstripe-front.webp",
+  "back": "assets/rail/the-charcoal-pinstripe-back.webp",
+  "side": "assets/rail/the-charcoal-pinstripe-side.webp",
+  "color": "#39393a",
+  "w": 540,
+  "h": 1000
+ },
+ {
+  "id": "the-camel-double-breasted",
+  "name": "The Camel Double-Breasted",
+  "price": 640,
+  "cat": "Double-breasted \u00b7 Peak lapel",
+  "sizes": [
+   "36R",
+   "38R",
+   "40R",
+   "42R",
+   "44R",
+   "46R"
+  ],
+  "front": "assets/rail/the-camel-double-breasted-front.webp",
+  "back": "assets/rail/the-camel-double-breasted-back.webp",
+  "side": "assets/rail/the-camel-double-breasted-side.webp",
+  "color": "#9c6f49",
+  "w": 511,
+  "h": 1000
+ },
+ {
+  "id": "the-black-peak-lapel",
+  "name": "The Black Peak Lapel",
+  "price": 520,
+  "cat": "Single-breasted \u00b7 Peak lapel",
+  "sizes": [
+   "36R",
+   "38R",
+   "40R",
+   "42R",
+   "44R",
+   "46R"
+  ],
+  "front": "assets/rail/the-black-peak-lapel-front.webp",
+  "back": "assets/rail/the-black-peak-lapel-back.webp",
+  "side": "assets/rail/the-black-peak-lapel-side.webp",
+  "color": "#1e1e1e",
+  "w": 587,
+  "h": 1000
+ },
+ {
+  "id": "the-grey-check",
+  "name": "The Grey Check",
+  "price": 460,
+  "cat": "Single-breasted \u00b7 Subtle check",
+  "sizes": [
+   "36R",
+   "38R",
+   "40R",
+   "42R",
+   "44R",
+   "46R"
+  ],
+  "front": "assets/rail/the-grey-check-front.webp",
+  "back": "assets/rail/the-grey-check-back.webp",
+  "side": "assets/rail/the-grey-check-side.webp",
+  "color": "#5e5e60",
+  "w": 567,
+  "h": 1000
+ },
+ {
+  "id": "the-forest-double-breasted",
+  "name": "The Forest Double-Breasted",
+  "price": 690,
+  "cat": "Double-breasted \u00b7 Peak lapel",
+  "sizes": [
+   "36R",
+   "38R",
+   "40R",
+   "42R",
+   "44R",
+   "46R"
+  ],
+  "front": "assets/rail/the-forest-double-breasted-front.webp",
+  "back": "assets/rail/the-forest-double-breasted-back.webp",
+  "side": "assets/rail/the-forest-double-breasted-side.webp",
+  "color": "#1a2b1e",
+  "w": 516,
+  "h": 1000
+ },
+ {
+  "id": "the-burgundy-two-button",
+  "name": "The Burgundy Two-Button",
+  "price": 560,
+  "cat": "Single-breasted \u00b7 Notch lapel",
+  "sizes": [
+   "36R",
+   "38R",
+   "40R",
+   "42R",
+   "44R",
+   "46R"
+  ],
+  "front": "assets/rail/the-burgundy-two-button-front.webp",
+  "back": "assets/rail/the-burgundy-two-button-back.webp",
+  "side": "assets/rail/the-burgundy-two-button-side.webp",
+  "color": "#43161f",
+  "w": 552,
+  "h": 1000
+ }
+]

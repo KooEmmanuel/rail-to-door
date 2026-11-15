@@ -1,0 +1,239 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Atelier Example — Ready today, or cut to you</title>
+<meta name="description" content="Atelier Example (rail-to-door demo): two-piece, double-breasted, dinner and wedding suits, ready to wear or made to measure. Choose your suit and watch it travel to your door.">
+<meta name="theme-color" content="#0E1A2B">
+<meta property="og:title" content="Atelier Example — Ready today, or cut to you">
+<meta property="og:description" content="Ready-to-wear and made-to-measure suits, delivered to your door.">
+<meta property="og:image" content="assets/logo.png">
+<link rel="icon" href="assets/logo.png" type="image/png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..700;1,6..96,400..700&family=Hanken+Grotesk:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+<script type="importmap">{ "imports": { "three": "./vendor/three.module.js" } }</script>
+</head>
+<body class="mode-shop">
+
+<!-- ───────── FIRST LIGHT: step through the door ───────── -->
+<div class="intro" id="intro" aria-hidden="true">
+  <svg class="intro-veil" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid slice">
+    <defs><mask id="introHole"><rect width="100" height="100" fill="#fff"/><path class="intro-arch" d="M44 62V45a6 6 0 0 1 12 0v17z" fill="#000"/></mask>
+      <radialGradient id="dawn" cx="50" cy="66" r="34" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#985322" stop-opacity=".55"/><stop offset=".55" stop-color="#985322" stop-opacity=".08"/><stop offset="1" stop-color="#985322" stop-opacity="0"/></radialGradient></defs>
+    <g mask="url(#introHole)"><rect width="100" height="100" fill="#0E1A2B"/><rect class="intro-glow" width="100" height="100" fill="url(#dawn)"/></g>
+  </svg>
+  <div class="intro-mark"><i class="intro-logo"></i><p class="intro-name">Atelier Example</p><p class="intro-line"><em>Ready today, or cut to you.</em></p></div>
+</div>
+
+<header class="nav">
+  <a class="logo" href="./" aria-label="Atelier Example home"><img src="assets/logo.png" alt=""><b>Atelier <span>Example</span></b></a>
+  <div class="nav-right">
+    <button class="track-btn" id="trackBtn" type="button">Track order</button>
+    <label class="cur"><span class="sr">Currency</span><select id="curSel" aria-label="Currency"></select></label>
+    <button class="bag-btn" id="bagBtn" aria-label="Open"><span class="cw cap">Bag</span><b id="bagCount">0</b></button>
+  </div>
+</header>
+
+<!-- ───────── SHOP: the rail ───────── -->
+<main class="shop" id="shop">
+  <div class="shell">
+    <div class="eyebrow rise" style="--d:0">Ready to wear <span>|</span> Made to measure</div>
+    <h1 class="rise" style="--d:1">Choose your suit. <em>Walk out new.</em></h1>
+    <nav class="cats rise" id="cats" style="--d:2" aria-label="Collections"></nav>
+    <p class="cat-note" id="catNote" aria-live="polite"></p>
+    <div class="rail rise" style="--d:3">
+      <div class="bar"></div>
+      <div class="pieces" id="pieces"></div>
+      <button class="rail-nav prev" id="railPrev" type="button" aria-label="Scroll the rail left">←</button><button class="rail-nav next" id="railNext" type="button" aria-label="Scroll the rail right">→</button>
+    </div>
+    <p class="copy">Every <span class="iw">suit</span> on the rail is already made. Open one, choose its colour and your size, and it ships in <span class="rtwDays"></span> days. Or have it made to measure: choose a cloth, give us your measurements, and we cut it for you. Free shipping over <span class="freeOver"></span>.</p>
+  </div>
+
+  <section class="cloth" id="cloth" aria-labelledby="clothTitle">
+    <div class="cloth-head">
+      <p class="eyebrow">Made to measure · The cloth</p>
+      <h2 id="clothTitle">Ready today, <em>or cut to you.</em></h2>
+      <p>These cloths are for made-to-measure pieces only. Choose one, then pick any style from the rail: it opens made to measure in that cloth, and asks for your measurements.</p>
+      <div class="ways">
+        <div class="way"><p class="mono">Ready to wear</p><h3>Already made, <em>hanging.</em></h3><ol><li>Type</li><li>Colour</li><li>Size</li></ol><p class="way-foot">Packed and dispatched in <span class="rtwDays"></span> days.</p></div>
+        <div class="way way-mtm"><p class="mono">Made to measure</p><h3>Cut <em>to you.</em></h3><ol><li>Type</li><li>Cloth</li><li>Your measurements</li></ol><p class="way-foot">Chalked, cut and sewn in <span class="mtmWeeks"></span> weeks.</p></div>
+      </div>
+    </div>
+    <div class="cloth-grid" id="clothGrid"></div>
+  </section>
+
+  <section class="creed" aria-labelledby="creedTitle">
+    <p class="eyebrow">The atelier promise</p>
+    <h2 id="creedTitle">You walk in as you are.<br><em>You walk out new.</em></h2>
+    <p class="creed-body">A suit is a doorway. Step through it, and you stand differently, speak differently, are seen differently. Every piece is cut to your measure, pressed by hand and sent to your door, ready the moment you put it on.</p>
+    <ol class="vows">
+      <li><b>01</b><h3>Cut to you</h3><p>Your chest, your shoulders, your stance. Not a size off a shelf.</p></li>
+      <li><b>02</b><h3>Pressed and bagged</h3><p>Steamed, zipped into its garment bag, folded once, boxed.</p></li>
+      <li><b>03</b><h3>To your door</h3><p>Tracked from our atelier to your doorstep, wherever you are.</p></li>
+    </ol>
+  </section>
+
+  <footer class="foot">
+    <div class="foot-brand"><img src="assets/logo.png" alt=""><p><b>Atelier Example</b><span>Ready today, or cut to you.</span></p></div>
+    <nav class="foot-cats" aria-label="Collections">
+      <a href="#three-piece">Three-piece suits</a><a href="#two-piece">Two-piece suits</a><a href="#sb-vest">Single-breasted vests</a><a href="#db-vest">Double-breasted vests</a><a href="#dinner">Dinner suits</a><a href="#wedding">Wedding suits</a><a href="#safari">Safari suits</a>
+    </nav>
+    <p class="foot-small">Made to measure in Lisbon · Shipped worldwide · <a href="admin.html">Atelier (demo admin)</a></p>
+  </footer>
+
+  <div class="bag-zone" id="bagZone">
+    <p class="bag-tip" id="bagTip">Drop it in</p>
+    <button class="tote" id="tote" aria-label="Open">
+      <svg class="tote-handles h-tote" viewBox="0 0 220 96" aria-hidden="true"><path d="M78 94C78 44 142 44 142 94" fill="none" stroke="#08111D" stroke-width="7" stroke-linecap="round"/><path d="M60 94C60 16 160 16 160 94" fill="none" stroke="#0E1A2B" stroke-width="7.5" stroke-linecap="round"/><path d="M60 94C60 16 160 16 160 94" fill="none" stroke="#985322" stroke-width="2.4" stroke-dasharray="3 5" stroke-linecap="round"/></svg>
+      <svg class="tote-handles h-basket" viewBox="0 0 220 96" aria-hidden="true"><path d="M30 94C30 2 190 2 190 94" fill="none" stroke="#9A7B4F" stroke-width="9" stroke-linecap="round"/><path d="M30 94C30 2 190 2 190 94" fill="none" stroke="#C9A877" stroke-width="3" stroke-dasharray="6 7" stroke-linecap="round"/></svg>
+      <svg class="tote-handles h-cart" viewBox="0 0 220 60" aria-hidden="true"><path d="M4 14h30l14 44" fill="none" stroke="currentColor" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <span class="tote-peek" id="totePeek"></span>
+      <span class="tote-body"><i class="tote-fold"></i><i class="mk"></i><b>Atelier<br><small>Example</small></b></span>
+      <span class="tote-badge" id="toteBadge">0</span>
+    </button>
+    <button class="go-btn" id="goCart" disabled><span>Continue to <span class="cw">bag</span></span> <i>→</i></button>
+  </div>
+</main>
+
+<!-- ───────── FOCUS VIEW: turn a piece front / back ───────── -->
+<div class="focus" id="focus" role="dialog" aria-modal="true" aria-labelledby="fTitle">
+  <button class="close" id="close">Close ✕</button>
+  <div class="viewer" id="viewer">
+    <div class="hook"></div>
+    <div class="card" id="card"><img class="front" id="imgFront" alt=""><img class="back" id="imgBack" alt=""></div>
+    <div class="cloth-chip" id="clothChip" aria-hidden="true"><i></i><span><em id="chipLab">Your cloth</em><b></b></span></div>
+    <div class="hint">Swipe or drag to turn</div>
+  </div>
+  <div class="info">
+    <div class="lab" id="fCat"></div>
+    <h2 id="fTitle"></h2>
+    <div class="price" id="fPrice"></div>
+    <div class="tabs"><button data-side="front" class="on">Front</button><button data-side="back">Back</button></div>
+    <div class="buy-mode" role="radiogroup" aria-label="How you want it">
+      <button type="button" data-mode="rtw" class="on" role="radio" aria-checked="true">Ready to wear<small>Ships in <span class="rtwDays"></span> days</small></button>
+      <button type="button" data-mode="mtm" role="radio" aria-checked="false">Made to measure<small>Cut for you in <span class="mtmWeeks"></span> weeks</small></button>
+    </div>
+    <ol class="vsteps">
+      <li><div class="lab"><i>1</i>Type · <b id="fType"></b></div></li>
+      <li class="rtw-only"><div class="lab"><i>2</i>Colour · <b id="colName"></b></div><div class="fabrics colours" id="colours" role="radiogroup" aria-label="Colour"></div></li>
+      <li class="rtw-only"><div class="lab"><i>3</i>Size</div><div class="sizes" id="sizes"></div></li>
+      <li class="mtm-only"><div class="lab"><i>2</i>Cloth · <b id="fabName"></b></div><div class="fabrics" id="fabrics" role="radiogroup" aria-label="Cloth"></div><p class="fab-meta" id="fabMeta"></p></li>
+      <li class="mtm-only"><div class="lab"><i>3</i>Your body measurements · <b>cm</b></div><div class="measure-row v-measure" id="vMeasure"></div>
+        <p class="measure-note">Measure over a shirt, tape snug, not tight. Our cutter checks every number with you before the cloth is cut.</p></li>
+    </ol>
+    <button class="add" id="fAdd"><span>Add to <span class="cw">bag</span></span> <i>→</i></button>
+    <p class="v-note" id="vNote"></p>
+  </div>
+</div>
+
+<!-- ───────── BAG DRAWER ───────── -->
+<div class="scrim" id="scrim"></div>
+<aside class="drawer" id="drawer" aria-hidden="true">
+  <header><h2>Your <span class="cw">bag</span></h2><button class="x" id="drawerX" aria-label="Close">×</button></header>
+  <div class="lines" id="lines"></div>
+  <footer>
+    <p class="row"><span>Subtotal</span><b id="subTotal"></b></p>
+    <p class="row dim"><span>Shipping</span><span id="shipCost">—</span></p>
+    <button class="or-btn wide" id="toPay">Continue to payment →</button>
+  </footer>
+</aside>
+
+<!-- ───────── PAYMENT ───────── -->
+<section class="pay" id="pay" aria-hidden="true">
+  <div class="pay-card">
+    <button class="x" id="payX" aria-label="Back">←</button>
+    <div class="pay-left">
+      <p class="mono eyebrow">CHECKOUT</p>
+      <h2>Almost <em>new.</em></h2>
+      <div class="sum" id="sum"></div>
+      <p class="row"><span>Subtotal</span><b id="pSub"></b></p>
+      <p class="row dim"><span>Shipping · Air, from Lisbon</span><span id="pShip"></span></p>
+      <p class="row total"><span>Total</span><b id="pTotal"></b></p>
+      <p class="lead-time" id="leadTime"></p>
+    </div>
+    <form class="pay-right" id="payForm">
+      <p class="mono eyebrow">DELIVER TO</p>
+      <label><span>Full name</span><input name="name" value="Kwame Boateng" autocomplete="name" required></label>
+      <label><span>Street address</span><input name="street" value="14 Kingsland Road, Flat 3" autocomplete="street-address" required></label>
+      <label><span>City</span><select name="city" id="citySel"></select></label>
+      <label><span>Email <small>for tracking updates</small></span><input name="email" type="email" value="kwame@example.com" autocomplete="email" required></label>
+      <div class="measure-block" id="measureBlock">
+      <p class="mono eyebrow" style="margin-top:18px">YOUR MEASUREMENTS <small class="cm">cm</small></p>
+      <p class="measure-sum" id="measureSum"></p>
+      <p class="measure-note">From your made-to-measure pieces. To change them, open the piece again from the rail.</p>
+      </div>
+      <p class="mono eyebrow" style="margin-top:22px">PAYMENT</p>
+      <div class="democard">
+        <i></i>
+        <div><b>Demo payment</b><span>This is a demonstration. Nothing is charged and no card details are collected.</span></div>
+      </div>
+      <button class="or-btn wide pay-btn" id="payBtn" type="submit"><span class="t">Pay <b id="payAmt"></b></span><i class="spin"></i><span class="ok">Paid ✓</span></button>
+    </form>
+  </div>
+</section>
+
+<!-- ───────── TRACK AN ORDER ───────── -->
+<section class="pay track" id="track" aria-hidden="true" aria-labelledby="trackTitle">
+  <div class="pay-card track-card">
+    <button class="x" id="trackX" aria-label="Close">×</button>
+    <form class="pay-right" id="trackForm">
+      <p class="mono eyebrow">TRACK AN ORDER</p>
+      <h2 id="trackTitle">Where is <em>my suit?</em></h2>
+      <p class="track-sub">Watch your order where it really is: on the cutting table, on the road or at your door.</p>
+      <label><span>Order number</span><input name="no" placeholder="ATX-12345" autocomplete="off" required></label>
+      <label><span>Email used at checkout</span><input name="email" type="email" placeholder="you@example.com" autocomplete="email" required></label>
+      <p class="track-err" id="trackErr" role="alert"></p>
+      <button class="or-btn wide" type="submit">Show my order →</button>
+      <div class="recent" id="recent"></div>
+      <p class="proto-note">Prototype: orders are saved in this browser. Live, they come from your server.</p>
+    </form>
+  </div>
+</section>
+
+<!-- ───────── THE ORDER JOURNEY ───────── -->
+<section class="journey" id="journey">
+  <div class="stage">
+    <div class="j-under">
+      <div class="j-copy pos-tl" data-q data-in=".004" data-out=".052"><p class="mono eyebrow">01 — MEASURED</p><h2>Measured<br><em>to you.</em></h2><p class="body">Chest, waist, sleeve. Your numbers go to the cutting table, not a size chart.</p></div>
+      <div class="j-copy pos-tl" data-q data-in=".056" data-out=".111"><p class="mono eyebrow">02 — CUT</p><h2>Chalked,<br><em>then cut.</em></h2><p class="body">Your pattern is traced onto the cloth by hand, then cut with shears.</p></div>
+      <div class="j-copy pos-tl" data-q data-in=".114" data-out=".168"><p class="mono eyebrow">03 — SEWN</p><h2>Sewn,<br><em>seam by seam.</em></h2><p class="body">Every seam on one machine, by one pair of hands.</p></div>
+      <div class="j-copy pos-tl" data-q data-in=".171" data-out=".226"><p class="mono eyebrow">04 — FITTED</p><h2>Fitted<br><em>on the form.</em></h2><p class="body">Pinned and checked against your measurements before it is finished.</p></div>
+      <div class="j-copy pos-tl" data-q data-in=".229" data-out=".274"><p class="mono eyebrow">05 — PRESSED</p><h2>Pressed<br><em>into shape.</em></h2><p class="body">Steam and a heavy iron set the lapels and the line.</p></div>
+      <div class="j-copy pos-tl" data-in=".025" data-out=".13"><p class="mono eyebrow">06 — PACKED</p><h2>Pressed, bagged,<br><em>boxed.</em></h2><p class="body">Each piece is steamed, zipped into its garment bag and folded once. Then it is laid in the box at our Lisbon atelier.</p></div>
+      <div class="j-copy pos-tl" data-in=".15" data-out=".222"><p class="mono eyebrow">07 — LABELLED</p><h2>Your name,<br><em>one number.</em></h2><p class="body">Order <b class="oNo"></b> stays with the box. Every hand, every scan.</p></div>
+      <div class="j-copy pos-bl" data-in=".245" data-out=".325"><p class="mono eyebrow">08 — DISPATCH</p><h2>Out of<br><em>the atelier.</em></h2></div>
+      <div class="j-copy pos-tl" data-in=".365" data-out=".535"><p class="mono eyebrow">09 — BY VAN</p><h2>On<br><em>the road.</em></h2><p class="body">Loaded. Doors shut.<br>To Humberto Delgado, the same evening.</p></div>
+      <div class="j-copy pos-tl" data-in=".575" data-out=".64"><p class="mono eyebrow">10 — AT THE AIRPORT</p><h2>Into<br><em>the hold.</em></h2><p class="body">Weighed. Cleared.<br>Loaded tonight.</p></div>
+      <div class="j-copy pos-tl" id="mapCopy" data-in=".80" data-out=".905"><p class="mono eyebrow">11 — IN THE AIR</p><h2><span class="oFrom">Lisbon</span> to <span class="oTo"></span>,<br><em>overnight.</em></h2></div>
+    </div>
+    <canvas id="gl" aria-hidden="true"></canvas>
+    <div class="cut" id="cut"></div>
+    <div class="j-over">
+      <div class="measure-card" id="measureCard"><p class="mono row"><span>MEASUREMENTS</span><span class="ok">● <b id="mName"></b></span></p>
+        <p class="mrow"><span>Chest</span><b data-m>0</b><i>cm</i></p><p class="mrow"><span>Waist</span><b data-m>0</b><i>cm</i></p><p class="mrow"><span>Sleeve</span><b data-m>0</b><i>cm</i></p></div>
+      <div class="status-card" id="statusCard" role="status" aria-live="polite">
+        <p class="mono eyebrow">ORDER <b class="oNo"></b> · LIVE</p>
+        <h3 id="stNow"></h3><p class="st-text" id="stText"></p>
+        <p class="st-meta"><span id="stWhen"></span><span id="stNext"></span></p>
+        <p class="end-actions"><button class="or-btn" id="stShop">Back to the shop</button><button class="ghost-btn" id="stReplay">Replay</button></p>
+      </div>
+      <div class="scan-card" id="scanCard"><p class="mono row"><span>SCAN OK</span><span class="ok">● LISBON ATELIER</span></p><p class="mono big oNo"></p><p class="mono row"><span id="scItems"></span><span class="oRoute"></span></p></div>
+      <div class="flight-card" id="flightCard"><p class="mono dim">FLIGHT AX 207 · CARGO</p><p class="fl-route"><b class="oA">LIS</b><span></span><b class="oB"></b></p><p class="fl-mi"><b id="flMi">0</b><i class="mono">KM</i><span class="mono dim">CRUISING 11,000 M</span></p></div>
+      <div class="j-copy pos-tl over" data-in=".955" data-out="1.2"><p class="mono eyebrow">12 — DELIVERED</p><h2>At your door.<br><em>Put it on.</em></h2><p class="body">Delivered in <span class="oTo"></span>. Unzip it and put it on. Thank you, <span class="oName"></span>.</p><p class="end-actions"><button class="or-btn" id="trackThis">Track this order</button><button class="ghost-btn" id="again">Shop again</button><button class="ghost-btn" id="replay">Replay the film</button></p></div>
+      <div class="toast" id="toast"><img class="tm" src="assets/logo.png" alt=""><div><b>Atelier Example</b><span>Order <span class="oNo"></span> delivered. Left at the door for <span class="oName"></span>.</span></div></div>
+    </div>
+    <div class="hud">
+      <ol class="steps" id="steps"><li>Measured</li><li>Cut</li><li>Sewn</li><li>Fitted</li><li>Pressed</li><li>Packed</li><li>Dispatch</li><li>On the road</li><li>Airport</li><li>In the air</li><li>Delivered</li></ol>
+      <div class="hud-right"><span class="mono">ORDER <b class="oNo"></b></span><button class="play" id="playBtn" aria-label="Play or pause">❚❚</button></div>
+      <i class="bar-p"><b id="hudBar"></b></i>
+    </div>
+  </div>
+</section>
+
+<div class="curtain" id="curtain"><p class="mono">PAYMENT RECEIVED. PRESSING YOUR SUIT.</p></div>
+<script type="module" src="js/main.js"></script>
+</body>
+</html>
