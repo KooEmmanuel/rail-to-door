@@ -120,7 +120,7 @@ The cloth, the jacket and the pattern paper take the chosen cloth's colour and w
 
 ## 7. Try it on (virtual try-on)
 
-The customer takes or uploads a photo and gets back a picture of themselves wearing the garment, in the colour or cloth they chose. `tryon.js` holds the whole feature; the panel's markup is the `#tryon` section of the example's `index.html`, and its styles are the "Try it on" block at the end of the example's `css/style.css`. Copy all three.
+The customer takes or uploads a photo and gets back a picture of themselves wearing the garment, in the colour or cloth they chose. `tryon.js` holds the page side; `assets/extensions/serve.py` replaces the site's `serve.py` and adds the server route the page talks to. The panel's markup is the `#tryon` section of the example's `index.html`, and its styles are the "Try it on" block at the end of the example's `css/style.css`. Copy all four.
 
 ```js
 import { initTryOn } from './tryon.js';
@@ -140,16 +140,21 @@ tryOn.open({ product, picture: imgFront.src, whole: false, key: `${product.id}|c
   - The consent line names the service the photo goes to.
   - Results are cached per photo and garment, so looking again costs nothing.
   - Closing the panel stops the camera and aborts a running request.
-- **The service** is the one function `tryOnRequest()`, set up by `TRYON` in `data.js`:
-  - *Prototype:* `TRYON.space` is a free public Hugging Face Space of the Leffa model (MIT licence), called straight from the browser over Gradio's queue API. It allows **about two try-ons per visitor per day** (the anonymous GPU quota) and takes 20–60 seconds. The quota error is caught and shown as "works again tomorrow". Use it to show the idea, not for a live store.
-  - *Live:* set `TRYON.endpoint` to a route on the store's own server. It receives `person` and `garment` (multipart) and returns `{ "url": "…" }`. The server calls a paid try-on service with its secret key. **Never put a key or token in `data.js`**: everything there is public. Do not create accounts or keys for the user; tell them what is needed.
+- **The service** is the one function `tryOnRequest()`, set up by `TRYON` in `data.js`. It always prefers a server route: `TRYON.endpoint` if set, else `api/tryon` when the site's `serve.py` offers it (checked once with a GET), else the Space directly from the browser as a last resort.
+  - *The route:* `POST api/tryon` takes `person` and `garment` (multipart) and returns `{ "url": "data:…" }`, `429 { "error": "quota", "retry": "HH:MM:SS" }` or `502 { "error": "busy" }`. `GET api/tryon` returns `{ "proxy": true, "signedIn": bool }`.
+  - *Prototype:* `serve.py` calls a free public Hugging Face Space of the Leffa model (MIT licence) over Gradio's queue API. Anonymously it allows **about two try-ons per computer per day** (the GPU quota), at 20–60 seconds each.
+    - The quota answer carries the wait, and the panel turns it into a clock time: "They come back tomorrow at 21:13".
+    - Started with the user's own Hugging Face token in `HF_TOKEN`, the quota is their account's (more on a free account, much more on PRO). The token is only sent to Hugging Face, never to the page.
+    - `serve.py` reads only that environment variable. Do not read token files from the user's home folder, and do not handle the token yourself: give the user the command that asks for it (`read -s "HF_TOKEN?Hugging Face token: " && export HF_TOKEN && python3 serve.py 8792`).
+    - Use it to show the idea, not for a live store.
+  - *Live:* set `TRYON.endpoint` to the same route on the store's real server, which calls a paid try-on service with its secret key. **Never put a key or token in `data.js` or anywhere in the page**: everything there is public. Do not create accounts or keys for the user; tell them what is needed.
 - **Limits to report:**
   - It is an AI preview of colour and style, not a fit check.
   - Only the top garment is put on; trousers are unchanged.
   - The garment covers roughly where the person's own top is, so a plain long-sleeved top gives the best picture.
   - The camera needs https on a live site.
 - **Testing:**
-  - The free quota is small, so test the flow with the service stubbed: intercept the Space's `/config`, `/upload`, `/queue/join`, `/queue/data` and `/file=` calls and answer with a saved result.
+  - The free quota is small, so test the flow with the service stubbed: intercept `POST api/tryon` (or, without the route, the Space's `/config`, `/upload`, `/queue/join`, `/queue/data` and `/file=` calls) and answer with a saved result.
   - Spend at most one real call to confirm the live path.
   - Launch headless Chrome with `--use-fake-ui-for-media-stream --use-fake-device-for-media-stream` to test the camera.
   - Never publish a test photo of a real person.

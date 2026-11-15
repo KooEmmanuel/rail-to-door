@@ -23,7 +23,7 @@ Optional add-ons for stores that sell more than one way (`/rail-to-door-extras`)
 
 - **Ready to wear or made to measure.** The viewer walks through numbered steps: *type → colour → size* for pieces already made, or *type → cloth → body measurements* for pieces made to order. Measurements are checked and remembered. A mixed bag works.
 - **The picture changes with the choice.** Pick a colour or a cloth and the product photo repaints in the browser, keeping its folds and shadows, with no extra images or credits. `scripts/make_masks.py` keeps the hanger out of it.
-- **Try it on.** The customer takes or uploads a photo and sees the jacket on themselves, in the colour or cloth they chose. The prototype uses a free Hugging Face model with a small daily limit; one setting points it at your own server for a live store.
+- **Try it on.** The customer takes or uploads a photo and sees the jacket on themselves, in the colour or cloth they chose. The prototype runs through the site's own little server to a free Hugging Face model with a small daily limit (more with your own Hugging Face token); one setting points it at your real server for a live store.
 - **The cloth.** A section of drawn cloth swatches (twill, flannel, chalk stripe, sharkskin, glen check, linen, drill, mohair, barathea, velvet), each with composition, weight, season and price.
 - **Order tracking.** "Track order" with the order number and email, or a `?track=` link. The film plays up to where the order really is and stops on a live status card. Ready-to-wear orders start at packing; made-to-measure orders start at the tailor's table.
 - **A staff admin page** to move orders through their stages; the customer's tracking moves on live.

@@ -52,12 +52,21 @@ function fitPhoto(src, sw, sh, { cover = false, mirror = false } = {}){
 }
 
 /* ── the try-on service ── */
-class TryError extends Error { constructor(kind, msg){ super(msg || kind); this.kind = kind; } }
-let fnIndex = null;
+class TryError extends Error { constructor(kind, msg, retry){ super(msg || kind); this.kind = kind; this.retry = retry || null; } }
+let fnIndex = null, route;   // route: the local server's try-on route when serve.py offers one, else null
+// "Try again in 23:59:20" → the local clock time it works again
+const retryIn = why => { const m = /(\d+):(\d{2}):(\d{2})/.exec(why || ''); return m ? ((+m[1] * 60 + +m[2]) * 60 + +m[3]) * 1000 : null; };
+async function localRoute(){
+  if (route !== undefined) return route;
+  try { const r = await fetch('api/tryon', { cache: 'no-store' }); route = r.ok && (await r.json()).proxy ? 'api/tryon' : null; } catch (e) { route = null; }
+  return route;
+}
 async function tryOnRequest(person, garment, onState, signal){
-  if (TRYON.endpoint){   // live: your own server holds the key and calls the paid service
+  const endpoint = TRYON.endpoint || await localRoute();
+  if (endpoint){   // a server holds any key and calls the service: your live server, or serve.py on this computer
     const fd = new FormData(); fd.append('person', person, 'person.jpg'); fd.append('garment', garment, 'garment.jpg');
-    onState('work'); const r = await fetch(TRYON.endpoint, { method: 'POST', body: fd, signal }); if (!r.ok) throw new TryError(r.status === 429 ? 'quota' : 'busy');
+    onState('work'); const r = await fetch(endpoint, { method: 'POST', body: fd, signal });
+    if (!r.ok){ let j = {}; try { j = await r.json(); } catch (e) {} throw new TryError(r.status === 429 ? 'quota' : 'busy', j.error, retryIn(j.retry)); }
     return (await r.json()).url;
   }
   const B = TRYON.space + '/gradio_api';
@@ -81,7 +90,7 @@ async function tryOnRequest(person, garment, onState, signal){
       if (m.msg === 'unexpected_error') throw new TryError('busy');
       if (m.msg === 'process_completed'){
         if (m.success && m.output && m.output.data && m.output.data[0]) return m.output.data[0].url;
-        const why = `${m.title || ''} ${(m.output && m.output.error) || ''}`; throw new TryError(/quota/i.test(why) ? 'quota' : 'busy', why.trim());
+        const why = `${m.title || ''} ${(m.output && m.output.error) || ''}`; throw new TryError(/quota/i.test(why) ? 'quota' : 'busy', why.trim(), retryIn(why));
       }
     }
   }
@@ -127,6 +136,14 @@ export function initTryOn(){
     } catch (e) { say('That file could not be opened as a photo. Try a JPG or PNG.'); }
   }
 
+  // when today's free try-ons come back, in the customer's own clock
+  function quotaText(ms){
+    const base = 'Today’s free try-ons are used up.';
+    if (!ms) return base + ' They come back within a day.';
+    const at = new Date(Date.now() + ms), now = new Date(), t = at.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+    if (ms < 90 * 60 * 1000) return `${base} They come back in about ${Math.max(1, Math.round(ms / 60000))} minutes, at ${t}.`;
+    return `${base} They come back ${at.toDateString() === now.toDateString() ? 'today' : 'tomorrow'} at ${t}.`;
+  }
   const STATUS = { prep: 'Laying out the jacket', send: 'Sending your photo', queue: 'Waiting for a fitting room', work: 'Putting it on you' };
   async function run(){
     if (!person || !ok.checked || !job) return; say('');
@@ -144,8 +161,7 @@ export function initTryOn(){
     } catch (e) {
       if (e.name === 'AbortError') return;
       set('ready');
-      say(e.kind === 'quota' ? 'The free demo allows about two try-ons a day for each person, and today’s are used. It will work again tomorrow.'
-        : 'The fitting room is busy right now. Wait a minute, then press “Try it on” again.');
+      say(e.kind === 'quota' ? quotaText(e.retry) : 'The fitting room is busy right now. Wait a minute, then press “Try it on” again.');
     } finally { clearInterval(tick); ctl = null; }
   }
 
