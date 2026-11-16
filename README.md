@@ -17,9 +17,31 @@ Every part takes the brand's own name, logo and colours.
 
 See a finished store made with it: [custom-suit-studio](https://github.com/KooEmmanuel/custom-suit-studio).
 
+## Extras: two ways to buy, live colour and cloth, try it on, order tracking
+
+Optional add-ons for stores that sell more than one way (`/rail-to-door-extras`):
+
+- **Ready to wear or made to measure.** The viewer walks through numbered steps: *type → colour → size* for pieces already made, or *type → cloth → body measurements* for pieces made to order. Measurements are checked and remembered. A mixed bag works.
+- **The picture changes with the choice.** Pick a colour or a cloth and the product photo repaints in the browser, keeping its folds and shadows, with no extra images or credits. `scripts/make_masks.py` keeps the hanger out of it.
+- **Try it on.** The customer takes or uploads a photo and sees the jacket on themselves, in the colour or cloth they chose. The prototype runs through the site's own little server to a free Hugging Face model with a small daily limit (more with your own Hugging Face token); one setting points it at your real server for a live store.
+- **The cloth.** A section of drawn cloth swatches (twill, flannel, chalk stripe, sharkskin, glen check, linen, drill, mohair, barathea, velvet), each with composition, weight, season and price.
+- **Order tracking.** "Track order" with the order number and email, or a `?track=` link. The film plays up to where the order really is and stops on a live status card. Ready-to-wear orders start at packing; made-to-measure orders start at the tailor's table.
+- **A staff admin page** to move orders through their stages; the customer's tracking moves on live.
+- **The workshop film**: measured, cut, sewn, fitted and pressed, in the customer's own cloth, before the box.
+- **Collections and currencies**: a category filter on the rail, and prices in several currencies.
+
+![Ready to wear: choose a colour](screenshots/08_ready_to_wear_colour.jpg)
+![Made to measure: choose a cloth, give your measurements](screenshots/09_made_to_measure_cloth.jpg)
+![Try it on: a fitting-room mirror for your own photo](screenshots/14_try_it_on.jpg)
+![The workshop film](screenshots/10_workshop_cut.jpg)
+![Tracking stops where the order really is](screenshots/11_tracking.jpg)
+![The atelier admin](screenshots/12_atelier_admin.jpg)
+
+A complete store using all of them is in [`examples/suit-atelier`](examples/suit-atelier). Run it with `python3 serve.py 8793` inside that folder. The guide is [`skills/rail-to-door/references/extensions.md`](skills/rail-to-door/references/extensions.md).
+
 ## Install
 
-Copy the seven skill folders into your Claude Code skills folder:
+Copy the eight skill folders into your Claude Code skills folder:
 
 ```bash
 git clone https://github.com/KooEmmanuel/rail-to-door.git
@@ -49,6 +71,7 @@ You can also run one stage at a time:
 | `/rail-to-door-checkout` | Order drawer, totals, demo payment screen |
 | `/rail-to-door-journey` | The 3D film: box, conveyor, van, plane, map, doorstep |
 | `/rail-to-door-verify` | Runs the whole flow in a browser and checks every scene |
+| `/rail-to-door-extras` | Ready to wear + made to measure, colour / cloth repaint, try it on, order tracking + admin, workshop film, collections, currencies |
 
 ## What you need
 
